@@ -38,14 +38,11 @@ router.post('/addreport', function(req, res) {
     _id: new mongoose.Types.ObjectId(),
     date:req.body.date,
     Greenhouse:req.body.Greenhouse ,
-    // itemRows:[{
-    //   description:req.body.description,
-    //   manpower:req.body.manpower ,
-    //   remarks:req.body.remarks ,
-
-    // }],
+    itemRows:req.body.itemRows,
+   
     
   })
+  
   report.save((data)=>{  res.end("asd") });
 
  
@@ -57,14 +54,27 @@ router.get('/addreport', function(req, res, next) {
     });
 
 
-    
+
 router.get('/reportofid/:id', function(req, res, next) {
 
   let  id = req.params.id  ;
-  console.log(id)
+ 
     Dailyreport.findById(id).exec().then((data) => { res.json(data) }).catch((err) => { console.log(err)});
 
     });
 
+  router.post('/updatereport/:id', function(req, res) {
+    let  ids = req.params.id  ;
+    console.log(ids)
+    console.log(req.body)
+    
+    Dailyreport.findOneAndUpdate({_id:ids},req.body, function (err, place) {
+      res.send(place);
 
+    });
+  
+  
+    
+  }); 
+    
 module.exports = router;
